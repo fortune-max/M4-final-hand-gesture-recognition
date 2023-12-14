@@ -1,0 +1,4 @@
+leapGestRecog/
+env/*
+hand gestures data.zip
+.DS_Store
