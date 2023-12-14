@@ -1,4 +1,5 @@
 leapGestRecog/
-env/*
+env/
 hand gestures data.zip
 .DS_Store
+pretrained_models/
