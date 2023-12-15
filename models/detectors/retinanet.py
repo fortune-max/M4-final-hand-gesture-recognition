@@ -1,11 +1,33 @@
-from functools import partial
-from typing import Union
-
 import torch
 import torchvision
+from torch import Tensor, nn
+from functools import partial
+from typing import Dict, Iterator, List, Union
 from torchvision.models.detection.retinanet import RetinaNetClassificationHead
 
-from models.detectors.base import BaseModel
+
+class BaseModel:
+    """
+    Torchvision class wrapper
+    """
+
+    def to(self, device: str):
+        self.hagrid_model = self.hagrid_model.to(device)
+
+    def parameters(self) -> Iterator[nn.Parameter]:
+        return self.hagrid_model.parameters()
+
+    def train(self):
+        self.hagrid_model.train()
+
+    def eval(self):
+        self.hagrid_model.eval()
+
+    def load_state_dict(self, state_dict: Dict[str, Tensor]):
+        self.hagrid_model.load_state_dict(state_dict)
+
+    def state_dict(self):
+        return self.hagrid_model.state_dict()
 
 
 class RetinaNet_ResNet50(BaseModel):
@@ -40,7 +62,7 @@ class RetinaNet_ResNet50(BaseModel):
         img_std: list
             Standard deviation values for the input image
         """
-        super().__init__()
+        self.type = None
 
         if not isinstance(img_size, int):
             img_size = max(img_size)
